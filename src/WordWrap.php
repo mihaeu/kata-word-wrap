@@ -4,6 +4,8 @@ namespace Mihaeu\Kata;
 
 class WordWrap
 {
+    const WHITESPACE_REGEX = '/(\s)/';
+    
     /** @var string[] $lines */
     private $lines = [];
 
@@ -31,7 +33,7 @@ class WordWrap
 
     private function splitWords(\string $source) : array
     {
-        $wordsAndDelimiters = preg_split('/(\s)/', $source, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $wordsAndDelimiters = preg_split(self::WHITESPACE_REGEX, $source, -1, PREG_SPLIT_DELIM_CAPTURE);
         $words = array_filter($wordsAndDelimiters, function ($element) {
             if ($element != ' ') {
                 return $element;
@@ -42,7 +44,7 @@ class WordWrap
 
     private function wordIsLinefeed($word)
     {
-        return preg_match('/\s/', $word) === 1;
+        return preg_match(self::WHITESPACE_REGEX, $word) === 1;
     }
 
     private function currentLineIsEmpty()
