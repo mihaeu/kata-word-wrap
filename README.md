@@ -18,4 +18,12 @@ composer install
 
 # run tests
 vendor/bin/phpunit
- ```
+
+# run tests on other solution
+git checkout object-oriented
+vendor/bin/phpunit
+```
+
+## Why?
+
+With solution one I tried to do everything as required, with solution two (`git checkout object-oriented`) I went for a more object oriented design. In my opinion coding katas should not only be about hacking, but about learning and repeating the proper ways of working with a language.
