@@ -5,7 +5,7 @@ namespace Mihaeu\Kata;
 class WordWrap
 {
     const WHITESPACE_REGEX = '/(\s)/';
-    
+
     /** @var string[] $lines */
     private $lines = [];
 
@@ -33,7 +33,10 @@ class WordWrap
 
     private function splitWords(\string $source) : array
     {
+        // split words by SPACE \n etc. and capture delimiters
         $wordsAndDelimiters = preg_split(self::WHITESPACE_REGEX, $source, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        // keep linefeeds and other whitespaces except ' '
         $words = array_filter($wordsAndDelimiters, function ($element) {
             if ($element != ' ') {
                 return $element;
