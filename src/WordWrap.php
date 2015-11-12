@@ -11,9 +11,13 @@ class WordWrap
         $currentLine = 0;
         $lines[$currentLine] = '';
 
-        $words = explode(' ', $source);
+        $words = self::splitWords($source);
         foreach ($words as $word) {
-            if (self::currentLineIsEmpty($lines[$currentLine])) {
+            if (self::wordIsLinefeed($word)) {
+                ++$currentLine;
+                $lines[$currentLine] = '';
+            }
+            else if (self::currentLineIsEmpty($lines[$currentLine])) {
                 $lines[$currentLine] = $word;
             } else if (self::nextWordCanFitLine($lines[$currentLine], $word, $columns)) {
                 $lines[++$currentLine] = $word;
@@ -22,6 +26,21 @@ class WordWrap
             }
         }
         return implode(PHP_EOL, $lines);
+    }
+
+    private static function splitWords(\string $source) : array
+    {
+        $wordsAndDelimiters = preg_split('/(\s)/', $source, -1, PREG_SPLIT_DELIM_CAPTURE);
+        return array_filter($wordsAndDelimiters, function ($element) {
+            if ($element != ' ') {
+                return $element;
+            }
+        });
+    }
+
+    private static function wordIsLineFeed(\string $word) : \bool
+    {
+        return preg_match('/\s/', $word) === 1;
     }
 
     private static function currentLineIsEmpty(\string $line) : \bool

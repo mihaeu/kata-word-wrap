@@ -17,5 +17,30 @@ class WordWrapTest extends \PHPUnit_Framework_TestCase
     public function testWrapsWhenPossibleOtherwiseBreaksBoundaties()
     {
         $this->assertEquals("testtesttesttest\ntest", WordWrap::wrap('testtesttesttest test', 10));
+        }
+
+    public function testDoesNotRemoveExistingLinebreaks()
+    {
+        // poem by Hafiz-e Shirazi
+        $source = <<<EOT
+Rose petals let us scatter
+And fill the cup with red wine
+The firmaments let us shatter
+And come with a new design
+EOT;
+
+        // break after x columns and leave linebreaks (this is ugly, but what an editor would do)
+        $expected = <<<EOT
+Rose petals let us
+scatter
+And fill the cup
+with red wine
+The firmaments let
+us shatter
+And come with a new
+design
+EOT;
+
+        $this->assertEquals($expected, WordWrap::wrap($source, 20));
     }
 }
