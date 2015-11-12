@@ -17,10 +17,8 @@ class WordWrap
         $words = $this->splitWords($source);
         foreach ($words as $word) {
             if ($this->wordIsLinefeed($word)) {
-                ++$this->currentLine;
-                $this->lines[$this->currentLine] = '';
-            }
-            else if ($this->currentLineIsEmpty()) {
+                $this->lines[++$this->currentLine] = '';
+            } else if ($this->currentLineIsEmpty()) {
                 $this->lines[$this->currentLine] = $word;
             } else if ($this->currentWordDoesNotFit($columns, $word)) {
                 $this->lines[++$this->currentLine] = $word;
