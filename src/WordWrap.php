@@ -4,7 +4,7 @@ namespace Mihaeu\Kata;
 
 class WordWrap
 {
-    public static function wrap(\string $source, \int $columns) : \string
+    public function wrap(\string $source, \int $columns) : \string
     {
         /** @var string[] $lines */
         $lines = [];
