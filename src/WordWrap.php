@@ -16,13 +16,13 @@ class WordWrap
 
         $words = $this->splitWords($source);
         foreach ($words as $word) {
-            if (preg_match('/\s/', $word) === 1) {
+            if ($this->wordIsLinefeed($word)) {
                 ++$this->currentLine;
                 $this->lines[$this->currentLine] = '';
             }
-            else if (strlen($this->lines[$this->currentLine]) === 0) {
+            else if ($this->currentLineIsEmpty()) {
                 $this->lines[$this->currentLine] = $word;
-            } else if ((strlen($this->lines[$this->currentLine]) + strlen(' '.$word)) > $columns) {
+            } else if ($this->currentWordDoesNotFit($columns, $word)) {
                 $this->lines[++$this->currentLine] = $word;
             } else {
                 $this->lines[$this->currentLine] .= ' '.$word;
@@ -40,5 +40,20 @@ class WordWrap
             }
         });
         return $words;
+    }
+
+    private function wordIsLinefeed($word)
+    {
+        return preg_match('/\s/', $word) === 1;
+    }
+
+    private function currentLineIsEmpty()
+    {
+        return strlen($this->lines[$this->currentLine]) === 0;
+    }
+
+    private function currentWordDoesNotFit(\int $columns, $word)
+    {
+        return (strlen($this->lines[$this->currentLine]) + strlen(' ' . $word)) > $columns;
     }
 }
