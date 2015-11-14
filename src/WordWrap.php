@@ -11,12 +11,12 @@ class WordWrap
      */
     public function wrap(\string $source, \int $columns) : \string
     {
-        if (strlen($source) <= $columns) {
+        $sourceLength = strlen($source);
+        if ($sourceLength <= $columns) {
             return $source;
         }
 
         $output = '';
-        $sourceLength = strlen($source);
         for ($i = 0; $i < $sourceLength; ++$i) {
             if ($source[$i] === ' ' && ($i + 1) % $columns === 0) {
                 $output .= PHP_EOL;
