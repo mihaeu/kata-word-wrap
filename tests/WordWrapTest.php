@@ -17,6 +17,11 @@ class WordWrapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $this->wordWrap->wrap('', 99));
     }
 
+    public function testShortWordsFits()
+    {
+        $this->assertEquals('test', $this->wordWrap->wrap('test', 10));
+    }
+
     public function testFitsOneLongWordInOneColumn()
     {
         $this->assertEquals('123456'.PHP_EOL.'789', $this->wordWrap->wrap('123456789', 6));
@@ -27,14 +32,18 @@ class WordWrapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("1234 6789\n1234", $this->wordWrap->wrap('1234 6789 1234', 10));
     }
 
-    public function testWrapsWhenPossibleOtherwiseBreaksBoundaties()
+    public function testWrapsWhenPossibleOtherwiseBreaksBoundaries()
     {
-        $this->assertEquals("testtestte'.PHP_EOL.'sttesttest", $this->wordWrap->wrap('testtesttesttest test', 10));
-        }
+        $this->assertEquals(
+            'testtestte'.PHP_EOL.'sttest tes'.PHP_EOL.'t',
+            $this->wordWrap->wrap('testtesttesttest test', 10)
+        );
+    }
 
-    public function testDoesNotRemoveExistingLinebreaks()
+    public function testDoesNotRemoveExistingLineBreaks()
     {
-        $this->markTestSkipped();
+        $this->markTestSkipped('Newline behaviour not specified.');
+
         // poem by Hafiz-e Shirazi
         $source = <<<EOT
 Rose petals let us scatter
