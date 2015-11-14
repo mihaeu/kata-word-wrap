@@ -18,11 +18,13 @@ class WordWrap
 
         $output = '';
         for ($i = 0; $i < $sourceLength; ++$i) {
-            if ($source[$i] === ' ' && ($i + 1) % $columns === 0) {
-                $output .= PHP_EOL;
-            } elseif (($i + 1) % $columns === 0) {
-                $output .= $source[$i].PHP_EOL;
-            } else {
+            if (($i + 1) % $columns === 0) {            // reached last column
+                if ($source[$i] === ' ') {              // and it's a space
+                    $output .= PHP_EOL;
+                } else {                                // or it's a normal character
+                    $output .= $source[$i].PHP_EOL;
+                }
+            } else {                                    // normal character in line
                 $output .= $source[$i];
             }
         }
