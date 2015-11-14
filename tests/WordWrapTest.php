@@ -42,7 +42,7 @@ class WordWrapTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesNotRemoveExistingLineBreaks()
     {
-        $this->markTestSkipped('Newline behaviour not specified.');
+//        $this->markTestSkipped('Newline behaviour not specified.');
 
         // poem by Hafiz-e Shirazi
         $source = <<<EOT
@@ -51,15 +51,58 @@ And fill the cup with red wine
 The firmaments let us shatter
 And come with a new design
 EOT;
+        // break after x columns and leave linebreaks (this is ugly, but what an editor would do)
+        $expected = <<<EOT
+Rose petals let us s
+catter
+And fill the cup wit
+h red wine
+The firmaments let u
+s shatter
+And come with a new
+design
+EOT;
+
+        $this->assertEquals($expected, $this->wordWrap->wrap($source, 20));
+    }
+
+    public function testDoesNotRemoveExistingWindowsLineBreaks()
+    {
+        $source = "Rose petals let us scatter\r\n".
+            "And fill the cup with red wine\r\n".
+            "The firmaments let us shatter\r\n".
+            "And come with a new design";
 
         // break after x columns and leave linebreaks (this is ugly, but what an editor would do)
         $expected = <<<EOT
-Rose petals let us
-scatter
-And fill the cup
-with red wine
-The firmaments let
-us shatter
+Rose petals let us s
+catter
+And fill the cup wit
+h red wine
+The firmaments let u
+s shatter
+And come with a new
+design
+EOT;
+
+        $this->assertEquals($expected, $this->wordWrap->wrap($source, 20));
+    }
+
+    public function testDoesNotRemoveExistingPreOsxLineBreaks()
+    {
+        $source = "Rose petals let us scatter\r".
+            "And fill the cup with red wine\r".
+            "The firmaments let us shatter\r".
+            "And come with a new design";
+
+        // break after x columns and leave linebreaks (this is ugly, but what an editor would do)
+        $expected = <<<EOT
+Rose petals let us s
+catter
+And fill the cup wit
+h red wine
+The firmaments let u
+s shatter
 And come with a new
 design
 EOT;
