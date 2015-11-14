@@ -31,8 +31,8 @@ class WordWrap
             // normal character in line
             } else {
                 $output .= $source[$i];
-
-                if (preg_match('/\v/', $source[$i])) {
+                // if there's a linefeed in the original text, we have to keep it
+                if ($source[$i] === "\n") {
                     // keep track of the characters left in line
                     $overhead = $columns - ($i +1) % $columns;
                 }
