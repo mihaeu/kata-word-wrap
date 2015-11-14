@@ -12,6 +12,11 @@ class WordWrapTest extends \PHPUnit_Framework_TestCase
         $this->wordWrap = new WordWrap();
     }
 
+    public function testAcceptsEmptyString()
+    {
+        $this->assertEquals('', $this->wordWrap->wrap('', 99));
+    }
+
     public function testFitsOneLongWordInOneColumn()
     {
         $this->assertEquals('123456789', $this->wordWrap->wrap('123456789', 6));
