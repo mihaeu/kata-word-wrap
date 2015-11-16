@@ -1,4 +1,4 @@
-# Word Wrap Kata by Rober Martin
+# Word Wrap Kata by Robert Martin
 
 My attempt at the kata which was suggested by Robert Martin on his blog. I used the following [description](http://codingdojo.org/cgi-bin/index.pl?KataWordWrap):
 
